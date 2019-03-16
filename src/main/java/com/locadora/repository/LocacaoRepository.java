@@ -1,8 +1,8 @@
 package com.locadora.repository;
 
 import com.locadora.model.Locacao;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface LocacaoRepository extends CrudRepository<Locacao, Long> {
+public interface LocacaoRepository extends JpaRepository<Locacao, Long> {
     
 }

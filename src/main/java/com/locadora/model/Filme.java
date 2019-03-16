@@ -20,15 +20,7 @@ public class Filme {
     private String diretor;
     
     @Column(nullable = false)
-    private int disponiveis; // copias
-
-    public int getDisponiveis() {
-        return disponiveis;
-    }
-
-    public void setDisponiveis(int disponiveis) {
-        this.disponiveis = disponiveis;
-    }
+    private int copias;
 
     public long getId() {
         return id;
@@ -52,6 +44,14 @@ public class Filme {
 
     public void setDiretor(String diretor) {
         this.diretor = diretor;
+    }
+
+    public int getCopias() {
+        return copias;
+    }
+
+    public void setCopias(int copias) {
+        this.copias = copias;
     }
 
     @Override
@@ -82,6 +82,6 @@ public class Filme {
     @Override
     public String toString() {
         return "Filme{" + "id=" + id + ", titulo=" + titulo + ", diretor=" 
-                + diretor + ", disponiveis=" + disponiveis + '}';
+                + diretor + ", copias=" + copias + '}';
     }
 }

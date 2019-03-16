@@ -1,12 +1,12 @@
 package com.locadora.model;
 
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Locacao {
@@ -16,19 +16,22 @@ public class Locacao {
     private long id;
     
     @ManyToOne
-    private Usuario usuario; // long usuario_id
-
+    private Usuario usuario;
+    
     @ManyToOne
-    private Filme filme; // long filme_id
+    private Filme filme;
+    
+    @Transient
+    public static String DATA_PATERN = "yyyy-MM-dd HH:mm";
 
     @Column(nullable = false, name = "data_locacao")
-    private Date dataLocacao;
+    private String dataLocacao;
 
     @Column(nullable = false, name = "previsao_devolucao")
-    private Date previsaoDevolucao;
+    private String previsaoDevolucao;
 
     @Column(nullable = true, name = "data_devolucao")
-    private Date dataDevolucao;
+    private String dataDevolucao;
 
     public long getId() {
         return id;
@@ -54,34 +57,34 @@ public class Locacao {
         this.filme = filme;
     }
 
-    public Date getDataLocacao() {
+    public String getDataLocacao() {
         return dataLocacao;
     }
 
-    public void setDataLocacao(Date dataLocacao) {
+    public void setDataLocacao(String dataLocacao) {
         this.dataLocacao = dataLocacao;
     }
 
-    public Date getPrevisaoDevolucao() {
+    public String getPrevisaoDevolucao() {
         return previsaoDevolucao;
     }
 
-    public void setPrevisaoDevolucao(Date previsaoDevolucao) {
+    public void setPrevisaoDevolucao(String previsaoDevolucao) {
         this.previsaoDevolucao = previsaoDevolucao;
     }
 
-    public Date getDataDevolucao() {
+    public String getDataDevolucao() {
         return dataDevolucao;
     }
 
-    public void setDataDevolucao(Date dataDevolucao) {
+    public void setDataDevolucao(String dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + (int) (this.id ^ (this.id >>> 32));
+        int hash = 7;
+        hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 

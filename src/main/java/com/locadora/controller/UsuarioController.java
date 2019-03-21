@@ -2,19 +2,14 @@ package com.locadora.controller;
 
 import com.locadora.model.Usuario;
 import com.locadora.repository.UsuarioRepository;
-import java.util.HashSet;
+import com.locadora.service.SecurityService;
+import com.locadora.service.UsuarioService;
 import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,15 +22,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UsuarioController {
     
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private UsuarioService uService;
 
     @Autowired
-    private UsuarioRepository repository;
+    private SecurityService sService;
+    
+    @Autowired
+    private UsuarioRepository uRepository;
     
     // temp
     @GetMapping
     public @ResponseBody List<Usuario> listUsuarios() {
-        return (List<Usuario>) repository.findAll();
+        return (List<Usuario>) uRepository.findAll();
     }
     // end temp
     
@@ -48,7 +46,7 @@ public class UsuarioController {
         
         try {
             
-            Usuario un = repository.save(u);
+            Usuario un = uService.save(u);
             return new ResponseEntity(un, HttpStatus.CREATED);
 
         } catch(Exception ex) {
@@ -67,48 +65,22 @@ public class UsuarioController {
     POST /clients/login
     */
     @PostMapping("login")
-    public @ResponseBody ResponseEntity login(@RequestBody Usuario uLogin) {
+    public @ResponseBody ResponseEntity loginTest(@RequestBody Usuario u) {
         
         try {
+                       
+            sService.autoLogin(u.getEmail(), u.getSenha());
             
-            String email = uLogin.getEmail();
-            String senha = uLogin.getSenha();
+            Usuario loggin = uService.findByUsername(u.getEmail());
+            return new ResponseEntity(loggin, HttpStatus.ACCEPTED);
+            
+        } catch (UsernameNotFoundException unfe) {
+            
+            return new ResponseEntity("Usuário não encontrado.", HttpStatus.BAD_REQUEST);
 
-            Usuario u = repository.findByEmail(email);
+        } catch (AuthenticationException ae) {
 
-            // email não existe
-            if(u == null)
-                return new ResponseEntity("Usuário não encontrado.", HttpStatus.BAD_REQUEST);
-
-            // sucesso
-            if(u.getSenha().equals(senha)) {
-                
-                
-
-                Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-                UserDetails userDetails = new User(email, senha, grantedAuthorities);
-                UsernamePasswordAuthenticationToken token = 
-                        new UsernamePasswordAuthenticationToken(userDetails, 
-                                senha, userDetails.getAuthorities());
-
-                authenticationManager.authenticate(token);
-
-                if (token.isAuthenticated()) {
-                    SecurityContextHolder.getContext().setAuthentication(token);
-                    System.out.println(String.format("Auto login %s successfully!", email));
-                }
-                
-                return new ResponseEntity(u, HttpStatus.ACCEPTED);
-                
-            }
-
-            // senha incorreta
-            else
-                return new ResponseEntity("Senha incorreta.", HttpStatus.BAD_REQUEST);
-
-        } catch (AuthenticationException ex) {
-
-            return new ResponseEntity(ex, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Senha incorreta.", HttpStatus.BAD_REQUEST);
             
         }
     }

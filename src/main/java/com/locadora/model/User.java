@@ -7,20 +7,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Filme {
+public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
     @Column(nullable = false)
-    private String titulo;
+    private String name;
+    
+    @Column(nullable = false, unique = true)
+    private String email;
     
     @Column(nullable = false)
-    private String diretor;
-    
-    @Column(nullable = false)
-    private int copias;
+    private String pass;
 
     public long getId() {
         return id;
@@ -30,34 +30,34 @@ public class Filme {
         this.id = id;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getName() {
+        return name;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDiretor() {
-        return diretor;
+    public String getEmail() {
+        return email;
     }
 
-    public void setDiretor(String diretor) {
-        this.diretor = diretor;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public int getCopias() {
-        return copias;
+    public String getPass() {
+        return pass;
     }
 
-    public void setCopias(int copias) {
-        this.copias = copias;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 17 * hash + (int) (this.id ^ (this.id >>> 32));
+        int hash = 5;
+        hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 
@@ -72,7 +72,7 @@ public class Filme {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Filme other = (Filme) obj;
+        final User other = (User) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -81,7 +81,8 @@ public class Filme {
 
     @Override
     public String toString() {
-        return "Filme{" + "id=" + id + ", titulo=" + titulo + ", diretor=" 
-                + diretor + ", copias=" + copias + '}';
+        return "User{" + "id=" + id + ", name=" + name + ", email=" + email 
+                + ", pass=" + pass + '}';
     }
+
 }

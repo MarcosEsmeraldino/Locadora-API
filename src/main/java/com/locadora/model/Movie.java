@@ -7,20 +7,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Usuario {
+public class Movie {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
     @Column(nullable = false)
-    private String nome;
-    
-    @Column(nullable = false, unique = true)
-    private String email;
+    private String title;
     
     @Column(nullable = false)
-    private String senha;
+    private String director;
+    
+    @Column(nullable = false)
+    private int stock;
 
     public long getId() {
         return id;
@@ -30,34 +30,34 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getTitle() {
+        return title;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getEmail() {
-        return email;
+    public String getDirector() {
+        return director;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDirector(String director) {
+        this.director = director;
     }
 
-    public String getSenha() {
-        return senha;
+    public int getStock() {
+        return stock;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 83 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 
@@ -72,7 +72,7 @@ public class Usuario {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Usuario other = (Usuario) obj;
+        final Movie other = (Movie) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -81,7 +81,8 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nome=" + nome + ", email=" + email 
-                + ", senha=" + senha + '}';
+        return "Movie{" + "id=" + id + ", title=" + title + ", director=" 
+                + director + ", stock=" + stock + '}';
     }
+
 }

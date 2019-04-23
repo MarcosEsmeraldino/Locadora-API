@@ -2,7 +2,6 @@ package com.locadora.controller;
 
 import com.locadora.model.User;
 import com.locadora.service.AuthService;
-import com.locadora.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AuthController {
 
     @Autowired
-    private UserService uService;
-
-    @Autowired
     private AuthService aService;
        
     /*
@@ -34,10 +30,8 @@ public class AuthController {
         
         try {
 
-            aService.login(u.getEmail(), u.getPass());
-            
-            User loggin = uService.findByEmail(u.getEmail());
-            return new ResponseEntity(loggin, HttpStatus.OK);
+            User login = aService.login(u.getEmail(), u.getPass());
+            return new ResponseEntity(login, HttpStatus.OK);
             
         } catch (UsernameNotFoundException unfe) {
             

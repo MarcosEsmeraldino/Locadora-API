@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.locadora.service.MovieService;
-import java.text.Normalizer;
 
 @Controller
 @RequestMapping("movies")
@@ -82,9 +81,6 @@ public class MovieController {
     */
     @GetMapping("search/title/{title}")
     public @ResponseBody List<Movie> searchByTitle(@PathVariable("title") String title) {
-        String normalizeTitle = Normalizer.normalize(title, Normalizer.Form.NFD)
-           .replaceAll("[^\\p{ASCII}]", "");
-        String lowerTitle = normalizeTitle.toLowerCase();
-        return service.searchByTitle(lowerTitle);
+        return service.searchByTitle(title);
     }
 }

@@ -1,6 +1,7 @@
 package com.locadora.security;
 
-import com.locadora.service.UserDetailsService;
+//import com.locadora.service.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

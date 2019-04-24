@@ -1,47 +1,48 @@
-# REST API de LocadoraFilmes
+## LocadoraAPI
 
 # Visão Geral
-Descrição dos recursos que compõem a API de LocadoraFilmes.
+Descrição dos recursos que compõem LocadoraAPI.
 
-A API utiliza JSON sobre requisições HTTP, para:
-<ul>
-    <li>Criar usuário</li>
-    <li>Fazer login de usuário</li>
-    <li>Fazer logoff de usuário</li>
-    <li>Listar filmes disponíveis</li>
-    <li>Pesquisar filmes por título</li>
-    <li>Locar filme</li>
-    <li>Devolver filme</li>
-</ul>
-
+LocadoraAPI é a API de um sistema de locação de filmes. Esta API utiliza JSON sobre requisições HTTP para executar as seguintes tarefas:
+- Criar usuário
+- Fazer login de usuário
+- Fazer logoff de usuário
+- Listar filmes disponíveis
+- Pesquisar filmes por título
+- Locar filme
+- Devolver filme
 
 # Criar usuário
 Para criar um novo usuário faça a requisição:
-    <pre>POST /clients</pre>
-passando como parâmetro um JSON no formato:
-    <pre>
-{
-    "nome": "João da Silva",
-    "email": "joao@xmail.com",
-    "senha": "$j0@0"
-}
-    </pre>
-    
-Caso a requisição seja bem-sucedida, retornará um JSON no formato:
-    <pre>
-{
-    "status": 200
-}
-    </pre>
-    
-Caso ocorra algum erro, retornará um JSON no formato:
-    <pre>
-{
-    "status": 400,
-    "message": "Descrição do erro ocorrido."
-}
-    </pre>
 
+`POST` /users/create
+
+enviando um JSON no formato:
+
+```javascript
+{
+    "name": "Nome do Cara",
+    "email": "meuemail@xmail.com",
+    "pass": "9876543210"
+}
+```
+
+Caso a requisição seja bem-sucedida, retornará um JSON com status `200` no formato:
+```javascript
+{
+	"id": 123456789,
+    "name": "Nome do Cara",
+    "email": "meuemail@xmail.com",
+    "pass": "$2y$12$p5QhudM1GoO9KvCjQSnVGuhY5nj5Z41fwFHiS59DQ7HhUXFc6NPau"
+}
+```
+
+Caso ocorra algum erro, retornará um JSON com status `403` no formato:
+```javascript
+{
+	"message": "Descrição do erro ocorrido."
+}
+```
 
 # Fazer login de usuário
 Para fazer login no sistema faça a requisição:

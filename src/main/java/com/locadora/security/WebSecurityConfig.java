@@ -1,7 +1,6 @@
 package com.locadora.security;
 
-//import com.locadora.service.UserDetailsService;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.locadora.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserService userDetailsService;
 
     @Bean
     public PasswordEncoder encoder() {
@@ -39,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     public void configure(WebSecurity web) throws Exception {
+        // POST sem autenticacao
         web
             .ignoring().antMatchers(HttpMethod.POST, "/users/create").and()
             .ignoring().antMatchers(HttpMethod.POST, "/auth/login");
@@ -46,20 +46,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        
         http
+                
+            // resolve acessos POST com autenticacao
+            .cors().and().csrf().disable()
+                
+            // GET sem autenticacao
             .authorizeRequests()
                 .antMatchers(
                         "/movies/search/**",
                         "/auth/logout"
                 ).permitAll()
                 .anyRequest().authenticated();
-        /*
-                .and()
-            .formLogin()
-                .loginPage("/auth/login")
-                .permitAll()
-                .and()
-            .logout()
-                .permitAll();*/
     }
 }

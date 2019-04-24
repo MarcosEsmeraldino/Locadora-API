@@ -6,10 +6,14 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.locadora.repository.UserRepository;
+import java.util.HashSet;
 import java.util.List;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository repository;
@@ -35,6 +39,16 @@ public class UserService {
 
     public User findByEmail(String email) {
         return repository.findByEmail(email);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repository.findByEmail(email);
+        if (user == null)
+            throw new UsernameNotFoundException("");
+        
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(), user.getPass(), new HashSet<>());         
     }
     
 }

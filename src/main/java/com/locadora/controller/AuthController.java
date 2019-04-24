@@ -1,12 +1,11 @@
 package com.locadora.controller;
 
+import com.locadora.model.ErrorResponse;
 import com.locadora.model.User;
 import com.locadora.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +20,6 @@ public class AuthController {
     @Autowired
     private AuthService aService;
        
-    /*
-    Login User
-    POST /auth/login
-    */
     @PostMapping("login")
     public @ResponseBody ResponseEntity login(@RequestBody User u) {
         
@@ -33,24 +28,30 @@ public class AuthController {
             User login = aService.login(u.getEmail(), u.getPass());
             return new ResponseEntity(login, HttpStatus.OK);
             
-        } catch (UsernameNotFoundException unfe) {
+        } catch (Exception ex) {
             
-            return new ResponseEntity("Usuário não encontrado.", HttpStatus.UNAUTHORIZED);
-
-        } catch (AuthenticationException ae) {
-
-            return new ResponseEntity("Senha incorreta.", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(ErrorResponse.AUTH_LOGIN_ERROR, 
+                    HttpStatus.UNAUTHORIZED);
             
         }
+
     }
 
-    /*
-    Logout User
-    GET /auth/logout
-    */    
     @GetMapping("logout")
-    public @ResponseBody void logout() {
-        aService.logout();
+    public @ResponseBody ResponseEntity logout() {
+        
+        try {
+
+            aService.logout();
+            return new ResponseEntity(HttpStatus.OK);
+            
+        } catch (Exception ex) {
+            
+            return new ResponseEntity(ErrorResponse.AUTH_LOGOUT_ERROR, 
+                    HttpStatus.BAD_REQUEST);
+            
+        }
+
     }
 
 }

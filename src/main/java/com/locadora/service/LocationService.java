@@ -7,7 +7,6 @@ import com.locadora.repository.LocationRepository;
 import com.locadora.repository.MovieRepository;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +18,6 @@ public class LocationService {
     
     @Autowired
     private MovieRepository mRepository;
-    
-    public Location findById(long id) {
-        return repository.getOne(id);
-    }
-    
-    public List<Location> findAll() {
-        return repository.findAll();
-    }
     
     public Location startLocation(Location l) {
         
@@ -56,7 +47,12 @@ public class LocationService {
         
     }
     
-    public Location finishLocation(Location l) {
+    public Location finishLocation(long id) throws Exception {
+        
+        Location l = repository.getOne(id);
+        
+        if(l.getFinishDate() != null)
+            throw new Exception();
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar c = Calendar.getInstance();

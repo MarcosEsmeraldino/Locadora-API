@@ -1,13 +1,13 @@
-# LocadoraAPI
+# Locadora-API
 
 ## Visão Geral
 
-LocadoraAPI é a API de um sistema de locação de filmes.
+Locadora-API é a API de um sistema de locação de filmes.
 
-Esta API utiliza JSON sobre requisições HTTP para executar as seguintes tarefas:
+Este sistema utiliza JSON sobre requisições HTTP para executar as seguintes tarefas:
 - Criar usuário
 - Fazer login
-- Fazer logoff
+- Fazer logout
 - Listar filmes disponíveis
 - Pesquisar filmes por título
 - Locar filme
@@ -32,14 +32,18 @@ enviando um JSON no formato:
 Caso a requisição seja bem-sucedida, retornará um JSON com status `201` no formato:
 ```javascript
 {
-    "user_id": 123456789
+    "id": 3,
+    "name": "Fulano de Tal",
+    "email": "meuemail@xmail.com",
+    "pass": "$2a$10$42LIw1ol.QcyRw/L3jY/R.mys8Q8u0XJYpLoO45VtYv69E.5FEWc2"
 }
 ```
 
 Caso ocorra algum erro, retornará um JSON com status `400` no formato:
 ```javascript
 {
-    "message": "Descrição do erro ocorrido."
+    "code": 1,
+    "message": "Não foi possível criar o usuário."
 }
 ```
 
@@ -61,42 +65,35 @@ enviando um JSON no formato:
 Caso a requisição seja bem-sucedida, retornará um JSON com status `200` no formato:
 ```javascript
 {
-    "user_id": 123456789
+    "id": 3,
+    "name": "Fulano de Tal",
+    "email": "meuemail@xmail.com",
+    "pass": "$2a$10$42LIw1ol.QcyRw/L3jY/R.mys8Q8u0XJYpLoO45VtYv69E.5FEWc2"
 }
 ```
+
+Caso ocorra algum erro, retornará um JSON com status `401` no formato:
+```javascript
+{
+    "code": 2,
+    "message": "Não foi possível fazer o login."
+}
+```
+
+## Fazer logout
+
+Para fazer logout no sistema faça a requisição:
+
+`GET` /auth/login
+
+
+Caso a requisição seja bem-sucedida, retornará uma mensagem vazia com status `200`.
 
 Caso ocorra algum erro, retornará um JSON com status `400` no formato:
 ```javascript
 {
-    "message": "Descrição do erro ocorrido."
-}
-```
-
-## Fazer logoff
-
-Para fazer logoff no sistema faça a requisição:
-
-`POST` /auth/logoff/
-
-enviando um JSON no formato:
-
-```javascript
-{
-    "user_id": 123456789
-}
-```
-
-Caso a requisição seja bem-sucedida, retornará um JSON com status `200` no formato:
-```javascript
-{
-    "status": "ok"
-}
-```
-
-Caso ocorra algum erro, retornará um JSON com status `400` no formato:
-```javascript
-{
-    "message": "Descrição do erro ocorrido."
+    "code": 3,
+    "message": "Não foi possível fazer o logout."
 }
 ```
 
@@ -109,52 +106,39 @@ Para listar os filmes disponíveis para locação faça a requisição:
 Caso a requisição seja bem-sucedida, retornará um JSON com status `200` no formato:
 
 ```javascript
-{
-    "data": [
-        {
-            "id": 1234560,
-            "title": "O Senhor dos Anéis - A Sociedade do Anel",
-            "director": "Peter Jackson",
-            "stock": 10
-        },
-        {
-            "id": 1234561,
-            "title": "O Senhor dos Anéis - As Duas Torres",
-            "director": "Peter Jackson",
-            "stock": 5
-        },
-        {
-            "id": 1234562,
-            "title": "O Senhor dos Anéis - O Retorno do Rei",
-            "director": "Peter Jackson",
-            "stock": 5
-        },
-        {
-            "id": 1234563,
-            "title": "O Hobbit: Uma Jornada Inesperada",
-            "director": "Peter Jackson",
-            "stock": 10
-        },
-        {
-            "id": 1234564,
-            "title": "O Hobbit: A Desolação de Smaug",
-            "director": "Peter Jackson",
-            "stock": 5
-        },
-        {
-            "id": 1234565,
-            "title": "O Hobbit: A Batalha dos Cinco Exércitos",
-            "director": "Peter Jackson",
-            "stock": 5
-        }
-    ]
-}
+[
+    {
+        "id": 3,
+        "title": "O Senhor dos Anéis - O Retorno do Rei",
+        "director": "Peter Jackson",
+        "stock": 2
+    },
+    {
+        "id": 4,
+        "title": "O Hobbit: Uma Jornada Inesperada",
+        "director": "Peter Jackson",
+        "stock": 5
+    },
+    {
+        "id": 5,
+        "title": "O Hobbit: A Desolação de Smaug",
+        "director": "Peter Jackson",
+        "stock": 4
+    },
+    {
+        "id": 6,
+        "title": "O Hobbit: A Batalha dos Cinco Exércitos",
+        "director": "Peter Jackson",
+        "stock": 4
+    }
+]
 ```
 
 Caso ocorra algum erro, retornará um JSON com status `400` no formato:
 ```javascript
 {
-    "message": "Descrição do erro ocorrido."
+    "code": 4,
+    "message": "Não foi possível pesquisar filmes."
 }
 ```
 
@@ -163,38 +147,37 @@ Caso ocorra algum erro, retornará um JSON com status `400` no formato:
 
 Para pesquisar filmes pelo título faça a requisição:
 
-`GET` /movies/search/title/{hobbit}
+`GET` /movies/search/title/*{hobbit}*
 
 Caso a requisição seja bem-sucedida, retornará um JSON com status `200` no formato:
 ```javascript
-{
-    "data": [
-        {
-            "id": 1234563,
-            "title": "O Hobbit: Uma Jornada Inesperada",
-            "director": "Peter Jackson",
-            "stock": 10
-        },
-        {
-            "id": 1234564,
-            "title": "O Hobbit: A Desolação de Smaug",
-            "director": "Peter Jackson",
-            "stock": 5
-        },
-        {
-            "id": 1234565,
-            "title": "O Hobbit: A Batalha dos Cinco Exércitos",
-            "director": "Peter Jackson",
-            "stock": 5
-        }
-    ]
-}
+[
+    {
+        "id": 4,
+        "title": "O Hobbit: Uma Jornada Inesperada",
+        "director": "Peter Jackson",
+        "stock": 5
+    },
+    {
+        "id": 5,
+        "title": "O Hobbit: A Desolação de Smaug",
+        "director": "Peter Jackson",
+        "stock": 4
+    },
+    {
+        "id": 6,
+        "title": "O Hobbit: A Batalha dos Cinco Exércitos",
+        "director": "Peter Jackson",
+        "stock": 4
+    }
+]
 ```
 
 Caso ocorra algum erro, retornará um JSON com status `400` no formato:
 ```javascript
 {
-    "message": "Descrição do erro ocorrido."
+    "code": 4,
+    "message": "Não foi possível pesquisar filmes."
 }
 ```
 
@@ -210,38 +193,45 @@ enviando um JSON no formato:
 ```javascript
 {
     "user": {
-        "id": 123456789
+        "id": 1
     },
     "movies": [
-        "movie": {
-            "id": 1234560,
+        {
+            "movie": {
+                "id": 4
+            },
             "quant": 1
         },
-        "movie": {
-            "id": 1234561,
-            "quant": 1
-        },
-        "movie": {
-            "id": 1234562,
+        {
+            "movie": {
+                "id": 5
+            },
             "quant": 1
         }
     ]
 }
 ```
 
-Caso a requisição seja bem-sucedida, retornará um JSON com status `201` no formato:
-```javascript
-{
-    "status": "OK"
-}
-```
+Caso a requisição seja bem-sucedida, retornará uma mensagem vazia com status `200`.
 
 Caso ocorra algum erro, retornará um JSON com status `400` no formato:
 ```javascript
 {
-    "message": "Descrição do erro ocorrido."
+    "code": 5,
+    "message": "Não foi possível iniciar a locação."
 }
 ```
+
+Caso o usuário não esteja logado, retornará um JSON com status `403` no formato:
+```javascript
+{
+    "timestamp": "2019-04-24T15:36:19.704+0000",
+    "status": 403,
+    "error": "Forbidden",
+    "message": "Access Denied",
+    "path": "/locations/start"
+}
+``` 
 
 
 ## Devolver filme
@@ -254,20 +244,27 @@ enviando um JSON no formato:
 
 ```javascript
 {
-    "location_id": 123456789
+    "id": 2
 }
 ```
 
-Caso a requisição seja bem-sucedida, retornará um JSON com status `200` no formato:
-```javascript
-{
-    "status": "OK"
-}
-```
+Caso a requisição seja bem-sucedida, retornará uma mensagem vazia com status `200`.
 
 Caso ocorra algum erro, retornará um JSON com status `400` no formato:
 ```javascript
 {
-    "message": "Descrição do erro ocorrido."
+    "code": 6,
+    "message": "Não foi possível encerrar a locação."
 }
 ```
+
+Caso o usuário não esteja logado, retornará um JSON com status `403` no formato:
+```javascript
+{
+    "timestamp": "2019-04-24T15:36:19.704+0000",
+    "status": 403,
+    "error": "Forbidden",
+    "message": "Access Denied",
+    "path": "/locations/finish"
+}
+``` 

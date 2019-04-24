@@ -16,8 +16,8 @@ public class MovieLocation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonIgnore
     @ManyToOne
+    @JsonIgnore
     private Location location;
     
     @OneToOne

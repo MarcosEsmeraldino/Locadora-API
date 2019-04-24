@@ -5,6 +5,7 @@ import java.util.HashSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -44,7 +45,7 @@ public class AuthService {
             HttpSession session = request.getSession(true);
             session.setAttribute(HttpSessionSecurityContextRepository
                     .SPRING_SECURITY_CONTEXT_KEY, sc);
-            
+
             return user;
         }
         
@@ -56,13 +57,16 @@ public class AuthService {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
-        if(auth.getClass() == UsernamePasswordAuthenticationToken.class) {
-            
+        if ((auth instanceof AnonymousAuthenticationToken)) {
+            throw new UsernameNotFoundException("");
+        }
+        else {
+        
             HttpSession session = request.getSession(true);
+
             session.invalidate();
-            //session.setAttribute(HttpSessionSecurityContextRepository
-                    //.SPRING_SECURITY_CONTEXT_KEY, null);
-            
+            //session.removeAttribute(HttpSessionSecurityContextRepository
+                    //.SPRING_SECURITY_CONTEXT_KEY);
         }
     }
 }

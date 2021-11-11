@@ -56,7 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers(
                         "/movies/search/**",
-                        "/auth/logout"
+                        "/auth/logout",
+                        "/health-check"
                 ).permitAll()
                 .anyRequest().authenticated();
     }

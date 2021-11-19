@@ -4,16 +4,15 @@ import com.locadora.model.ErrorResponse;
 import com.locadora.model.Movie;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.locadora.service.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("movies")
 public class MovieController {
     
@@ -21,7 +20,7 @@ public class MovieController {
     private MovieService service;
     
     @GetMapping("/search/available")
-    public @ResponseBody ResponseEntity searchAvailable() {
+    public ResponseEntity searchAvailable() {
         
         try {
     
@@ -37,7 +36,7 @@ public class MovieController {
     }
     
     @GetMapping("search/title/{title}")
-    public @ResponseBody ResponseEntity searchByTitle(@PathVariable("title") String title) {
+    public ResponseEntity searchByTitle(@PathVariable("title") String title) {
         try {
             
             List<Movie> list = service.searchByTitle(title);

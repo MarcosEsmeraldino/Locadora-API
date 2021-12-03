@@ -3,6 +3,8 @@ package com.locadora.controller;
 import com.locadora.model.ErrorResponse;
 import com.locadora.model.Movie;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +49,39 @@ public class MovieController {
             return new ResponseEntity(ErrorResponse.MOVIES_SEARCH_ERROR, 
                     HttpStatus.BAD_REQUEST);
             
+        }
+    }
+
+    @GetMapping("/")
+    public ResponseEntity findAll() {
+
+        try {
+
+            List<Movie> list = service.findAll();
+            return new ResponseEntity(list, HttpStatus.OK);
+
+        } catch(Exception ex) {
+
+            return new ResponseEntity(ErrorResponse.MOVIES_SEARCH_ERROR,
+                    HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity findById(@PathVariable("id") String id) {
+        try {
+
+            long idLong = Long.parseLong(id);
+            Movie movie = service.findById(idLong)
+                    .orElseThrow(() -> new RuntimeException());
+            return new ResponseEntity(movie, HttpStatus.OK);
+
+        } catch(Exception ex) {
+
+            return new ResponseEntity(ErrorResponse.MOVIES_SEARCH_ERROR,
+                    HttpStatus.BAD_REQUEST);
+
         }
     }
 }

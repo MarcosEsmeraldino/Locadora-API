@@ -4,6 +4,8 @@ import com.locadora.model.Movie;
 import com.locadora.repository.MovieRepository;
 import java.text.Normalizer;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +36,9 @@ public class MovieService {
         
         return repository.searchByTitle(lowerTitle);
         
+    }
+
+    public Optional<Movie> findById(Long id) {
+         return repository.findById(id);
     }
 }

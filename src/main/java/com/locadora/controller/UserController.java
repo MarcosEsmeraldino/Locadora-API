@@ -3,6 +3,7 @@ package com.locadora.controller;
 import com.locadora.model.ErrorResponse;
 import com.locadora.model.User;
 import com.locadora.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ public class UserController {
     private UserService service;
     
     @PostMapping
+    @ApiOperation("Criar Usuário")
     public ResponseEntity addUsuario(@RequestBody User u) {
         
         try {

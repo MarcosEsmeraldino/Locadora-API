@@ -5,6 +5,7 @@ import com.locadora.model.Movie;
 import java.util.List;
 import java.util.Optional;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ public class MovieController {
     private MovieService service;
     
     @GetMapping("/search/available")
+    @ApiOperation("Buscar todos os filmes disponíveis para locação")
     public ResponseEntity searchAvailable() {
         
         try {
@@ -38,6 +40,7 @@ public class MovieController {
     }
     
     @GetMapping("search/title/{title}")
+    @ApiOperation("Buscar Filmes, filtrando pelo título")
     public ResponseEntity searchByTitle(@PathVariable("title") String title) {
         try {
             
@@ -53,6 +56,7 @@ public class MovieController {
     }
 
     @GetMapping("/")
+    @ApiOperation("Buscar todos os Filmes")
     public ResponseEntity findAll() {
 
         try {
@@ -69,6 +73,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Buscar Filme por ID")
     public ResponseEntity findById(@PathVariable("id") String id) {
         try {
 

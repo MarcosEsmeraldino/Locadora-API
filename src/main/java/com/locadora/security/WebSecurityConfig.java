@@ -57,7 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/movies/search/**",
                         "/auth/logout",
-                        "/health-check"
+                        "/health-check",
+                        "/swagger-ui.html"
                 ).permitAll()
                 .anyRequest().authenticated();
     }

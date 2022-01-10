@@ -3,6 +3,7 @@ package com.locadora.controller;
 import com.locadora.model.ErrorResponse;
 import com.locadora.model.User;
 import com.locadora.service.AuthService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class AuthController {
     private AuthService aService;
        
     @PostMapping("login")
+    @ApiOperation("Realizar login do Usuário")
     public ResponseEntity login(@RequestBody User u) {
         
         try {
@@ -37,6 +39,7 @@ public class AuthController {
     }
 
     @GetMapping("logout")
+    @ApiOperation("Realizar logout do Usuário")
     public ResponseEntity logout() {
         
         try {

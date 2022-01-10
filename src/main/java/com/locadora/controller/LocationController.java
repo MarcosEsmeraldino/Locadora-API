@@ -2,6 +2,7 @@ package com.locadora.controller;
 
 import com.locadora.model.ErrorResponse;
 import com.locadora.model.Location;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ public class LocationController {
     private LocationService service;
 
     @PostMapping("start")
+    @ApiOperation("Iniciar Locação")
     public ResponseEntity startLocation(@RequestBody Location l) {
         try {
             
@@ -34,6 +36,7 @@ public class LocationController {
     }
     
     @PostMapping("finish")
+    @ApiOperation("Finalizar Locação")
     public ResponseEntity finishLocation(@RequestBody Location l) {
         try {
             

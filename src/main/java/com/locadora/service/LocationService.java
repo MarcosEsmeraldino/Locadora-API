@@ -1,5 +1,6 @@
 package com.locadora.service;
 
+import com.locadora.exception.BusinessException;
 import com.locadora.model.Location;
 import com.locadora.model.Movie;
 import com.locadora.model.MovieLocation;
@@ -47,12 +48,12 @@ public class LocationService {
         
     }
     
-    public Location finishLocation(long id) throws Exception {
+    public Location finishLocation(long id) {
         
         Location l = repository.getOne(id);
         
         if(l.getFinishDate() != null)
-            throw new Exception();
+            throw new BusinessException();
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar c = Calendar.getInstance();

@@ -20,4 +20,7 @@ public class ConstantsMock {
     public static final String LOCATION_START_DATE = "LOCATION_START_DATE";
     public static final String LOCATION_FINISH_DATE = "LOCATION_FINISH_DATE";
 
+    public static final String ENCODER_PASS_ENCODED = "ENCODER_PASS_ENCODED";
+
+
 }

@@ -18,8 +18,8 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository repository;
 
-    @Autowired
-    private PasswordEncoder encoder;
+//    @Autowired
+//    private PasswordEncoder encoder;
     
     public List<User> findAll() {
         return repository.findAll();
@@ -28,7 +28,8 @@ public class UserService implements UserDetailsService {
     public User save(User u) {
         
         // set encoded pass
-        String encodedPass = encoder.encode(u.getPass());
+//        String encodedPass = encoder.encode(u.getPass());
+        String encodedPass = u.getPass();
         u.setPass(encodedPass);
         
         // save in db

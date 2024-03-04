@@ -2,8 +2,9 @@ package com.locadora.service;
 
 import com.locadora.model.User;
 import java.util.HashSet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,8 +22,8 @@ public class AuthService {
     @Autowired
     private UserService uService;
 
-    @Autowired
-    private AuthenticationManager authManager;
+//    @Autowired
+//    private AuthenticationManager authManager;
     
     @Autowired(required=true)
     private HttpServletRequest request;
@@ -35,7 +36,7 @@ public class AuthService {
         UsernamePasswordAuthenticationToken token = 
                 new UsernamePasswordAuthenticationToken(email, pass, new HashSet<>());
         
-        authManager.authenticate(token);
+//        authManager.authenticate(token);
         
         if (token.isAuthenticated()) {
             

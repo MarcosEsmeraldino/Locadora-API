@@ -44,7 +44,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
 	}
 
-	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
